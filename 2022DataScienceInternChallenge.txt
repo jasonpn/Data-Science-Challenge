@@ -3,7 +3,8 @@ Question 1:
 a.
 The formula for getting the average order value is total revenue / total number of orders.
 
-The AOV of 3145.13 was calculated by getting the mean (average) of the order_amount column. This shows that the average of order_amount was calculated instead of the average order value. The incorrect answer of 3145.13 was calculated by dividing the sum of order_amount by number of rows in the order_amount column (15725640 / 5000 = 3145.13). 
+The AOV of 3145.13 was calculated by getting the mean (average) of the order_amount column. This shows that the average of order_amount was calculated instead of the average order value. 
+The incorrect answer of 3145.13 was calculated by dividing the sum of order_amount by number of rows in the order_amount column (15725640 / 5000 = 3145.13). 
 
 This gives the wrong average order value, because there are shops such as shop_id 78, with a very high price for only one sneaker, and shop_id 42 with high number of items per order. These outliers skew the calculation of the average order value. 
 
@@ -43,7 +44,7 @@ c.
 SELECT ProductName, max(NumOrders)
 FROM (SELECT ProductName, sum(Quantity) as NumOrders 
 	FROM Products, Orders, OrderDetails, Customers
-	WHERE Orders.OrderID = OrderDetails.OrderID AND OrderDetails.ProductID = 		Products.ProductID AND Customers.CustomerID = Orders.CustomerID AND 			Customers.Country = 'Germany' 
+	WHERE Orders.OrderID = OrderDetails.OrderID AND OrderDetails.ProductID = Products.ProductID AND Customers.CustomerID = Orders.CustomerID AND 			Customers.Country = 'Germany' 
 	GROUP BY ProductName)
 GROUP BY NumOrders, ProductName
 
