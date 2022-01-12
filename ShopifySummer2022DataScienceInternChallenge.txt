@@ -1,0 +1,51 @@
+Question 1:
+
+a.
+The formula for getting the average order value is total revenue / total number of orders.
+
+The AOV of 3145.13 was calculated by getting the mean (average) of the order_amount column. This shows that the average of order_amount was calculated instead of the average order value. The incorrect answer of 3145.13 was calculated by dividing the sum of order_amount by number of rows in the order_amount column (15725640 / 5000 = 3145.13). 
+
+This gives the wrong average order value, because there are shops such as shop_id 78, with a very high price for only one sneaker, and shop_id 42 with high number of items per order. These outliers skew the calculation of the average order value. 
+
+When removing outliers, we get an average of 1493840 / 5000 = $298.77 order value, which seems like a more accurate average price for orders of sneakers. 
+
+b.
+Using this database, we can determine the shop that sold the most orders, as well as the customer that came back and made more orders the most over the period of 30 days.
+
+c. 
+The shop that sold the most orders and the most active customer can both be determined by calculating the mode of the shop_id and the user_id columns. 
+
+The shop that sold the most orders is shop_id 53 with 68 orders (found using excel COUNTIF function), and the customer that was most active was user_id 718 with 28 orders made.
+
+
+
+
+Question 2: 
+
+a. 
+SELECT count(*) FROM Orders
+where ShipperID = 1;
+
+Total orders shipped by Speedy Express: 54.
+
+b.
+SELECT Employees.LastName, max(NumOrders)
+FROM(SELECT Orders.EmployeeID, Employees.LastName, count(OrderID) as NumOrders
+	FROM Orders
+	INNER JOIN Employees 
+	ON Orders.EmployeeID = Employees.EmployeeID
+	GROUP BY Orders.EmployeeID, LastName)
+GROUP BY NumOrders, LastName
+
+The last name of the employee with the most orders is: Peacock
+
+c. 
+SELECT ProductName, max(NumOrders)
+FROM (SELECT ProductName, sum(Quantity) as NumOrders 
+	FROM Products, Orders, OrderDetails, Customers
+	WHERE Orders.OrderID = OrderDetails.OrderID AND OrderDetails.ProductID = 		Products.ProductID AND Customers.CustomerID = Orders.CustomerID AND 			Customers.Country = 'Germany' 
+	GROUP BY ProductName)
+GROUP BY NumOrders, ProductName
+
+The product ordered the most by customers in Germany is: Boston Crab Meat
+
