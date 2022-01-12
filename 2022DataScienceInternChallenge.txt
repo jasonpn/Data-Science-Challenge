@@ -44,7 +44,9 @@ c.
 SELECT ProductName, max(NumOrders)
 FROM (SELECT ProductName, sum(Quantity) as NumOrders 
 	FROM Products, Orders, OrderDetails, Customers
-	WHERE Orders.OrderID = OrderDetails.OrderID AND OrderDetails.ProductID = Products.ProductID AND Customers.CustomerID = Orders.CustomerID AND 			Customers.Country = 'Germany' 
+	WHERE Orders.OrderID = OrderDetails.OrderID AND OrderDetails.ProductID = Products.ProductID 
+	AND Customers.CustomerID = Orders.CustomerID 
+	AND Customers.Country = 'Germany' 
 	GROUP BY ProductName)
 GROUP BY NumOrders, ProductName
 
